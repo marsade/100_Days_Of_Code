@@ -22,6 +22,15 @@ def print_final_hand(usr_list, usr_sum, comp_list, comp_sum):
 
 
 def usr_hit(usr_list, comp_list, comp_sum):
+    '''Logic for user picking a new card
+
+    Args:
+        usr_list(list): User list of cards
+        comp_list(list): Computer list of cards
+        comp_sum(int): Computer total
+    Return:
+        run(boolean)
+    '''
     new_choice = random.choice(cards_list)
     usr_list.append(new_choice)
     usr_sum = sum(usr_list)
@@ -46,6 +55,16 @@ def usr_hit(usr_list, comp_list, comp_sum):
 
 
 def comp_stand(comp_sum, usr_list, usr_sum, comp_list):
+    '''Logic for computer stand
+
+    Args:
+        comp_sum(int): Computer total
+        usr_list(list): User list of cards
+        usr_sum(int): User total
+        comp_list(list): Computer list of cards
+    Return:
+        run(boolean)
+    '''
     if comp_sum == 21:
         print_final_hand(usr_list=usr_list, usr_sum=usr_sum,
                          comp_list=comp_list, comp_sum=comp_sum)
@@ -71,6 +90,13 @@ def comp_stand(comp_sum, usr_list, usr_sum, comp_list):
 
 
 def play_game(cards_list):
+    '''Logic for playing game
+
+    Args:
+        cards_list(list): list of all cards
+    Return:
+        None
+    '''
     start = input("Do you want to play a game of Blackjack? \
                    Type 'y' or 'n': ").lower()
     if start == 'n':
