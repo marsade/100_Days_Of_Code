@@ -6,7 +6,6 @@ import random
 CHOICE = random.randint(1, 100)
 print("Welcoime to the Number Guessing Game!")
 print("I'm thinking of a number between 1 and 100")
-print(f"Psst! The number is {CHOICE}")
 difficulty = input(f"Choose a difficulty. Type 'easy' or 'hard': ").lower()
 
 lives = 0
