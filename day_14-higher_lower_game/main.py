@@ -10,13 +10,10 @@ data = game_data.data
 score = 0
 
 # Choose initial options for comparison
-comp_1 = random.choice(data)
-a_index = data.index(comp_1)
-data.pop(a_index)
 comp_2 = random.choice(data)
 b_index = data.index(comp_2)
 
-def check_ans(a, b, choice, score):
+def check_ans(a, b, choice):
     '''Check the user answer against correct one
     Args:
         a(dict): First option
@@ -27,12 +24,10 @@ def check_ans(a, b, choice, score):
 
     if choice == 'a':
         if a['follower_count'] > b['follower_count']:
-            score += 1
-            return score, a
+            return True
     elif choice == 'b':
         if b["follower_count"] > a["follower_count"]:
-            score += 1
-            return score, b
+            return True
 
 def play_game(comp_a, comp_b, data, score):
     '''Function to start game
@@ -54,10 +49,10 @@ def play_game(comp_a, comp_b, data, score):
     print(f"Compare B: {str_b}")
     decision = input("Who has more followers? Type 'A' or 'B': ").lower()
 
-    try:
-        score, ans = check_ans(comp_a, comp_b, decision, score)
-        print(f"You're right! Current score: {score}")
-        comp_a = ans
+    is_correct = check_ans(comp_a, comp_b, decision)
+    if is_correct:
+        score += 1
+        comp_a = comp_2
         new_comp_b = random.choice(data)
         b_pos = data.index(new_comp_b)
         data.pop(b_pos)
@@ -65,8 +60,9 @@ def play_game(comp_a, comp_b, data, score):
             system('cls')
         else:
             system('clear')
+        print(f"You're right! Current score: {score}")
         play_game(comp_a, new_comp_b, data, score)
-    except:
+    else:
         print(f"Sorry, that's wrong. Final score {score}")
         return
 
