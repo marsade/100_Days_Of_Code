@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 '''Quiz Project'''
+from question_model import Question
+from data import question_data
+from quiz_brain import QuizBrain
 
+question_bank = []
+for question in question_data:
+    new_q = Question(question["text"], question["answer"])
+    question_bank.append(new_q)
 
-class User:
-    def __init__(self, user_id, username):
-        self.id = user_id
-        self.username = username
+new_quiz = QuizBrain(question_bank)
 
-user_1 = User("001", "Mars")
-
-print(user_1.username)
+while new_quiz.still_has_questions():
+    new_quiz.next_question()
