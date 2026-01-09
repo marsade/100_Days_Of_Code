@@ -29,6 +29,8 @@ tim = t.Turtle()
 ### Installing Modules
 There are some modules you can't just import because they aren't packaged within the python library. Get and install external modules from [Python Package Index](https://pypi.org/project/pip/)
 
+### Tuples
+A tuple is very similar to a list, it consists of round brackets and each items in the tuple are ordered. A tuplie is immutable meaning you cant change the values like with lists.
 ## Challenges
 - [1. Draw a square](main1.py)
 - [2. Draw a dotted line](main2.py)
