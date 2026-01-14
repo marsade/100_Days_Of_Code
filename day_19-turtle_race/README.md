@@ -1,4 +1,4 @@
-# Day 19 - More Turtle Graphics, Evemt Listeners, State and Multiple Instances
+# Day 19 - More Turtle Graphics, Event Listeners, State and Multiple Instances
 
 ## Overview
 ### Functions as an input
