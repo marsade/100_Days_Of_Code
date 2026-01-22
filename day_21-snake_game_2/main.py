@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-from turtle import Screen
-from snake import Snake
-from food import Food
-from scoreboard import Scoreboard
 import time
+from food import Food
+from snake import Snake
+from scoreboard import Scoreboard
+from turtle import Screen
 
 scr = Screen()
 scr.setup(width=600, height=600)
@@ -25,12 +25,16 @@ game_is_on = True
 while game_is_on:
     scr.update()
     time.sleep(0.2)
-
-
     snake.move()
-    
+
     # Detect collision with food.
     if snake.head.distance(food) < 15:
         food.refresh()
         score.increment()
+
+    # Detect collision with wall.
+    if snake.head.xcor() > 290 or snake.head.xcor() < -290 or \
+       snake.head.ycor() > 300 or snake.head.ycor() < -300:
+        score.game_over()
+        game_is_on = False
 scr.exitonclick()
