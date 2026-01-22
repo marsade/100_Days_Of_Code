@@ -12,3 +12,7 @@ There are 7 steps to making the snake game
 - Detect collision with tail: End the game when the snake collides with itself.
 
 In this first part of building the snake game, we will focus on the first three steps.
+
+## In this directory
+- [main.py](main.py): Main file with all modules imported and contains main functionality
+- [snake.py](snake.py): Contains snake class functionality
