@@ -36,14 +36,14 @@ To get a slice of this list from index 2 to 5
 piano_keys["a", "b", "c", "d", "e", "f", "g"]
 piano_keys[2:5]
 ```
-prints ```["c", "d", "e"]```
+prints ```["c", "d", "e"]```<br/>
 **Neat tricks**
 1. Providing no stop value slices the list from the index given to the end
 ```
 piano_keys["a", "b", "c", "d", "e", "f", "g"]
 piano_keys[2:]
 ```
-prints ```["c", "d", "e", "f", "g"]```
+prints ```["c", "d", "e", "f", "g"]```<br?>
 
 2. Using increment
 ```
@@ -56,7 +56,7 @@ prints every other value ```["c", "e"]```
 piano_keys["a", "b", "c", "d", "e", "f", "g"]
 piano_keys[::2]
 ```
-prints the second value of the whole list
+prints the second value of the whole list<br/>
 
 3. Reversing list using increment
 ```
