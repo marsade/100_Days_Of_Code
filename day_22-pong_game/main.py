@@ -22,8 +22,10 @@ scr.onkey(fun=l_paddle.move_up, key="w")
 scr.onkey(fun=l_paddle.move_down, key="s")
 game_is_on = True
 while game_is_on:
+    time.sleep(0.1)
     scr.update()
-    time.sleep(0.3)
-    ball.move()
 
+    ball.move()
+    if ball.ycor() > 280 or ball.ycor() < -300:
+        ball.bounce() 
 scr.exitonclick()
