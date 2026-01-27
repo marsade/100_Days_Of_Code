@@ -26,6 +26,21 @@ while game_is_on:
     scr.update()
 
     ball.move()
-    if ball.ycor() > 280 or ball.ycor() < -300:
-        ball.bounce() 
+
+    #Detect collision with walls
+    if ball.ycor() > 280 or ball.ycor() < -280:
+        ball.bounce_y()
+
+    #Detect collision with paddles
+    if ball.distance(r_paddle) < 50 and ball.xcor() > 330 or ball.distance(l_paddle) < 50 and ball.xcor() < -330:
+        ball.bounce_x()
+
+    #Detect out of bounds(r_paddle)
+    if ball.xcor() > 380:
+        ball.reset_position()
+
+    #Detect out of bounds(l_paddle)
+    if ball.xcor() < -380:
+        ball.reset_position()
+
 scr.exitonclick()
