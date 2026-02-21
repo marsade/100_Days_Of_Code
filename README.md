@@ -78,5 +78,5 @@ python3 main.py
 ```
 
 ## Connect
-- Github: [@marsade][https://github.com/marsade/]
-- Twitter: [@marsthegr8][https:twitter.com/marsthegr8]
+- Github: [@marsade](https://github.com/marsade/)
+- Twitter: [@marsthegr8](https:twitter.com/marsthegr8)
