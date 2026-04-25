@@ -8,14 +8,29 @@ One of the key features discussed is advanced Python functions, including functi
 Unit Converter Program
 
 ## History of Tkinter and GUIs
-- ONe of the earlier computers that incorporated this type of GUI OS was the Mac Lisa.
+- One of the earlier computers that incorporated this type of GUI OS was the Mac Lisa.
 
 ## Advanced Python Arguments
 We will learn how to use advancad python arguments to specify a wider range of inputs 
 - Arguments with Default Values 
+These are parameters that a function can use if no specific value is provided during a function call
 ```py
-    def foo(a=3, b=4, c=6):
-        print(a, b, c)
+def foo(a=3, b=4, c=6):
+	print(a, b, c)
+
+foo()
+
+>> 3, 4, 6
 ```
-- Unlimited Arguments
+- Unlimited Positional Arguments
+This feature allows a function to accept any number of positional arguments. When you call the function with several arguments, Python collects these arguments into a tuple withing the args parameter.
+
+```py
+def add(*args):
+	for n in args:
+		print(n)
+
+add(5, 6, 4, 2)
+```
+You can also access them by index. e.g `args[0]`
 - 
