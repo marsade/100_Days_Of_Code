@@ -33,4 +33,13 @@ def add(*args):
 add(5, 6, 4, 2)
 ```
 You can also access them by index. e.g `args[0]`
-- 
+- Many Keyworded Arguments
+The double asterisks allows us to work with an arbitrary number of keyword arguments.
+```py
+def
+```
+## .get() function
+We can use `.get()` instead of square brackets to access key-values in dictionaries. The benefit of get is that it won't return an error if the key is not found, just None.
+```py
+se;f.make = kw.get("make")
+```
