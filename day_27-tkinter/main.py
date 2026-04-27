@@ -7,9 +7,8 @@ window.minsize(width=500, height=300)
 
 #Label
 my_label = tkinter.Label(text="I am a Label", font= ("Arial", 24, "bold"))
-my_label.pack()
-
 my_label["text"] = "New Text"
+my_label.pack()
 
 #Buttons
 def button_clicked():
