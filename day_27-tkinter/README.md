@@ -55,3 +55,4 @@ The problem with place is that it is simple enough for a minimum number of widge
 ```py
 my_label.grid(column=0, row=0)
 ```
+The position of the widets is relative to other widgets placed on the screen.
