@@ -8,11 +8,11 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 0.2
-SHORT_BREAK_MIN = 0.2
-LONG_BREAK_MIN = 0.5
+WORK_MIN = 0.2 #25
+SHORT_BREAK_MIN = 0.2#5
+LONG_BREAK_MIN = 0.5#20
 reps = 0
-
+check = ""
 # ---------------------------- TIMER RESET ------------------------------- # 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
@@ -34,6 +34,7 @@ def start_timer():
         header.config(text="Work", fg=GREEN)
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 def count_down(count):
+    global reps, check
     count_min = math.floor(count / 60)
     count_sec = int(count % 60)
     if count_sec < 10:
@@ -44,6 +45,9 @@ def count_down(count):
         window.after(1000, count_down, count - 1)
     else:
         start_timer()
+        if reps % 2 != 0:
+            check += "✓"
+            tick_label.config(text=check)
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -65,7 +69,7 @@ start_button.grid(column=0, row=2)
 reset_button = Button(text="Reset", bg=YELLOW, bd=0, highlightthickness=0)
 reset_button.grid(column=2, row=2)
 
-tick_label = Label(text="✓", bg=YELLOW, fg=GREEN, font=(FONT_NAME, 25, "bold"))
+tick_label = Label(bg=YELLOW, fg=GREEN, font=(FONT_NAME, 25, "bold"))
 tick_label.grid(column=1, row=3)
 
 
