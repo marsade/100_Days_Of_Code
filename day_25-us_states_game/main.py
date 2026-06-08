@@ -23,11 +23,8 @@ while len(right_guesses) < 50:
     usr_ans = answer_state.title()
 
     if usr_ans == "Exit":
-        for state in right_guesses:
-            if state in all_states:
-                all_states.remove(state)
-
-        states_to_learn = pandas.Series(all_states)
+        missing_states = [state for state in all_states if state not in right_guesses]
+        states_to_learn = pandas.Series(missing_states)
         states_to_learn.to_csv("states_to_learn.csv", index=False)
         break
 
