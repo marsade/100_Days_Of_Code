@@ -41,7 +41,7 @@ def
 ## .get() function
 We can use `.get()` instead of square brackets to access key-values in dictionaries. The benefit of get is that it won't return an error if the key is not found, just None.
 ```py
-se;f.make = kw.get("make")
+self.make = kw.get("make")
 ```
 ## Tkinter Layout Managers
 Tkinter has a whole bunch of different layour managers. There are three you should know about.
