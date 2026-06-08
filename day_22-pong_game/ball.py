@@ -30,5 +30,5 @@ class Ball(Turtle):
         self.bounce_x()
 
     def incr_speed(self):
-        self.y_move *= 1.5
-        self.x_move *= 1.5
+        self.y_move *= 1.2
+        self.x_move *= 1.2
