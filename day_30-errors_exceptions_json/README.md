@@ -116,3 +116,24 @@ print(bmi)
 
 ## Code Exercise
 [nato_main.py](nato_main.py) - Update Nato Phonetic Alphabet program with exceptions
+
+## Challenge
+- Improving Password manager app with search functionality
+- Replacing saved passwords txt file to JSON
+- Using python to work with JSON
+
+## Writing to JSON
+```py
+json.dump(object_to_dump, file_name, optional:indent)
+```
+
+## Reading from JSON
+```py
+json.load(file_name)
+```
+## How to update JSON
+We have first have to load data then update
+```py
+data = json.load(data_file)
+data.update(new_data)
+```
