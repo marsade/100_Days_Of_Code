@@ -65,6 +65,21 @@ def save():
             web_entry.delete(0, END)
             pwd_entry.delete(0, END)
 
+# ---------------------------- Find Password ------------------------------- #
+def find_password():
+    search_val = web_entry.get()
+    try:
+        with open("data.json", "r") as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        messagebox.showerror(title="Error", message="No Data File Found")
+    else:
+        dict_val = data.get(search_val)
+        if dict_val == None:
+            messagebox.showerror(title="Error", message="No details found for this website")
+        else:
+            messagebox.showinfo(title=search_val, message=f"Email: {dict_val["email"]}\nPassword: {dict_val["password"]}")
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -92,12 +107,13 @@ mail_entry = Entry(width=35)
 mail_entry.grid(row=2, column=1, columnspan=2)
 mail_entry.insert(0, "adenijifara@gmail.com")
 pwd_entry = Entry(width=35)
-pwd_entry.grid(row=3, column=1)
+pwd_entry.grid(row=3, column=1, columnspan=2)
 
 #Buttons
 gen_btn = Button(text="Generate Password", command=generate_password)
-gen_btn.grid(row=3, column=2)
+gen_btn.grid(row=3, column=3, columnspan=2)
 add_btn = Button(text="Add", width=36, command=save)
 add_btn.grid(row=4, column=1)
-
+search_btn = Button(text="Search", command=find_password, width=17)
+search_btn.grid(row=1, column=2, columnspan=2)
 window.mainloop()
