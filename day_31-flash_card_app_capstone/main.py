@@ -2,12 +2,12 @@
 BACKGROUND_COLOR = "#B1DDC6"
 
 from tkinter import *
-
+import pandas
 
 
 window = Tk()
 window.title("Flashy")
-window.config(padx=50, pady=50)
+window.config(padx=50, pady=50, background=BACKGROUND_COLOR)
 
 #Card Image
 canvas = Canvas(width=800, height=526, highlightthickness=0)
