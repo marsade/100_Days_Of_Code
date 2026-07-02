@@ -5,9 +5,11 @@ import random
 
 
 BACKGROUND_COLOR = "#B1DDC6"
-
 flip_timer = None
-data = pandas.read_csv("data/french_words.csv")
+try:
+    data = pandas.read_csv("data/words_to_learn.csv")
+except FileNotFoundError:
+    data = pandas.read_csv("data/french_words.csv")
 lang_titles = list(data.columns)
 ulang_title = lang_titles[0]
 klang_title = lang_titles[1]
@@ -15,10 +17,23 @@ data_dict = data.to_dict("records")
 current_card = {}
 
 
+# ---Saving Progress--#
+def save_progress():
+    print("SAVING!\n")
+    df = pandas.DataFrame(data_dict)
+    df.to_csv("data/words_to_learn.csv", index=False)
+
+
 # ---Word Generation--- #
-def generate_card():
+def generate_card(which=None):
     global flip_timer, current_card
     flip_timer = window.after_cancel(flip_timer)
+    print(f"which={which}, current_card={current_card}")
+    if which == "green" and current_card in data_dict:
+        print("REMOVING!\n")
+        data_dict.remove(current_card)
+        save_progress()
+
     canvas.itemconfig(canvas_image, image=front_img)
     canvas.itemconfig(canvas_title, text=ulang_title, fill="black")
 
@@ -27,13 +42,14 @@ def generate_card():
     flip_timer = window.after(3000, flip_card)
 
 
+# ---Flip Card--- #
 def flip_card():
-    window.after_cancel(flip_timer)
-    canvas.itemconfig(canvas_title, text=klang_title ,fill="white")
+    canvas.itemconfig(canvas_title, text=klang_title, fill="white")
     canvas.itemconfig(canvas_word, fill="white")
     canvas.itemconfig(canvas_image, image=back_img)
 
     canvas.itemconfig(canvas_word, text=current_card["English"], fill="white")
+    print(data_dict)
 
 
 # ---UI Setup--- #
@@ -63,11 +79,11 @@ canvas.grid(row=0, column=0, columnspan=2)
 # Buttons
 image1 = PhotoImage(file="./images/wrong.png")
 image2 = PhotoImage(file="./images/right.png")
-right_btn = Button(image=image1, highlightthickness=0,
-                   bd=0, command=generate_card)
-wrng_btn = Button(image=image2, highlightthickness=0,
-                  bd=0, command=generate_card)
-right_btn.grid(row=1, column=0)
-wrng_btn.grid(row=1, column=1)
+red_btn = Button(image=image1, highlightthickness=0,
+                 bd=0, command=generate_card)
+green_btn = Button(image=image2, highlightthickness=0,
+                   bd=0, command=lambda: generate_card("green"))
+red_btn.grid(row=1, column=0)
+green_btn.grid(row=1, column=1)
 generate_card()
 window.mainloop()
