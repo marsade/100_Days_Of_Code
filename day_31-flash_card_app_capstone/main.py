@@ -19,7 +19,6 @@ current_card = {}
 
 # ---Saving Progress--#
 def save_progress():
-    print("SAVING!\n")
     df = pandas.DataFrame(data_dict)
     df.to_csv("data/words_to_learn.csv", index=False)
 
@@ -30,7 +29,6 @@ def generate_card(which=None):
     flip_timer = window.after_cancel(flip_timer)
     print(f"which={which}, current_card={current_card}")
     if which == "green" and current_card in data_dict:
-        print("REMOVING!\n")
         data_dict.remove(current_card)
         save_progress()
 
@@ -49,7 +47,6 @@ def flip_card():
     canvas.itemconfig(canvas_image, image=back_img)
 
     canvas.itemconfig(canvas_word, text=current_card["English"], fill="white")
-    print(data_dict)
 
 
 # ---UI Setup--- #
