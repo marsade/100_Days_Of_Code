@@ -1,2 +1,9 @@
 __pycache__/
 doc/
+.venv/
+day_25-us_states_game/states_to_learn.csv
+day_27-tkinter/playground.py
+day_29-password_manager_gui/data.txt
+.gitignore
+day_30-errors_exceptions_json/password_manager_v2/data.json
+day_31-flash_card_app_capstone/data/words_to_learn.csv
