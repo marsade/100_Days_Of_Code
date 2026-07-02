@@ -45,6 +45,7 @@
 │   └── README.md
 ├── ...
 └── README.md
+└──requirements.txt
 ```
 
 Each day folder contains:
