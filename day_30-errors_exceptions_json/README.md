@@ -1,4 +1,4 @@
-# Day 30 - Learning a bout Exceptions and Improving Password Manager App
+# Day 30 - Learning about Exceptions and Improving Password Manager App
 
 ## Overview
 This lecture focuses on error handling in python. In our programs, we can catch eexceptions so the program wont fail catastrophically, we can fail more gracefully or decide that something else should happen.
