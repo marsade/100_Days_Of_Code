@@ -4,3 +4,9 @@
 ## Tools Used
 - Python Tkinter
 - Open Trivia DB
+
+## Type Hints
+```py
+def greeting(name: str) -> str:
+	return "Hello" + name
+```
