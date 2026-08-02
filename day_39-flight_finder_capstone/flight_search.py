@@ -1,3 +1,29 @@
+#!/usr/bin/env python3
+import os
+import requests
+from dotenv import load_dotenv
+
+
+load_dotenv()
 class FlightSearch:
     #This class is responsible for talking to the Flight Search API.
-    pass
+    def __init__(self):
+        self.api_key = os.getenv("SERPAPI_KEY")
+        self.endpoint = os.getenv("SERPAPI_URL")
+        self.params = {
+            "engine": "google_flights",
+            "type": "1",
+            "adults": "1",
+            "currency": "GBP",
+            "api_key": self._api_key,
+        }
+
+    def check_flights(self, origin_city_code, destination_city_code, from_time, to_time):
+        self.params["outbound_date"] = from_time
+        self.params["return_date"] = to_time
+        self.params["departure_id"] = origin_city_code
+        self.params["arrival_id"] = destination_city_code
+        res = requests.get(self.endpoint, params=self.params)
+        res.raise_for_status()
+        self.data = res.json()
+        return self.data
