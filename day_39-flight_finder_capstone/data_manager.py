@@ -14,5 +14,16 @@ class DataManager:
         }
 
     def get_prices(self):
-        self.res = requests.get(self.sheety_url, headers=self.headers)
-        return(self.res.json()["prices"])
+        res = requests.get(self.sheety_url, headers=self.headers)
+        return(res.json()["prices"])
+
+    def update_lowest_price(self, row_id, new_price):
+        self.put_url = f"{self.sheety_url}/{row_id}"
+
+        payload = {
+            "price": {
+                "lowestPrice": new_price
+            }
+        }
+        res = requests.put(self.put_url, headers=self.headers, json=payload)
+        return (res.json())
