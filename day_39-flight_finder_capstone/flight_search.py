@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+'''Flight Finder'''
 import os
 import requests
 from dotenv import load_dotenv
@@ -6,15 +7,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 class FlightSearch:
-    #This class is responsible for talking to the Flight Search API.
     def __init__(self):
-        self.api_key = os.getenv("SERPAPI_KEY")
+        self._api_key = os.getenv("SERPAPI_KEY")
         self.endpoint = os.getenv("SERPAPI_URL")
         self.params = {
             "engine": "google_flights",
             "type": "1",
             "adults": "1",
-            "currency": "GBP",
+            "currency": "USD",
             "api_key": self._api_key,
         }
 
