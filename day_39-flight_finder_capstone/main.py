@@ -6,6 +6,7 @@ from data_manager import DataManager
 from dotenv import load_dotenv
 from flight_data import find_cheapest_flight
 from flight_search import FlightSearch
+from notification_manager import NotificationManager
 from pprint import pprint
 
 
@@ -37,5 +38,8 @@ for sh in sheet:
     print("Cheapest Flight Found: ", cheapest_flight)
     if cheapest_flight < sh["lowestPrice"] and cheapest_flight != "N/A":
         print(sheet_data.update_lowest_price(sh["id"], cheapest_flight))
+        NotificationManager(cheapest_flight, "ECN", sh["iataCode"], one_month, stay_till).send_sms()
+        NotificationManager(cheapest_flight, "ECN", sh["iataCode"], one_month, stay_till).send_whatsapp()
+
     else:
         print("Sheet Price Lower... skipping update")
