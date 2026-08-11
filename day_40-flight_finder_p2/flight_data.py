@@ -12,7 +12,8 @@ class FlightData:
 
 
 def find_cheapest_flight(data, return_date):
-    if not data:
+    all_flights = data.get("best_flights", []) + data.get("other_flights", [])
+    if not all_flights:
         fldata_list = [FlightData(
             price="N/A",
             origin_airport="N/A",
@@ -20,12 +21,13 @@ def find_cheapest_flight(data, return_date):
             out_date="N/A",
             return_date="N/A"
         )]
+        return fldata_list[0]
     fldata_list = [FlightData(
             price= flight["price"],
             origin_airport=flight["flights"][0]["departure_airport"]["id"],
             destination_airport=flight["flights"][-1]["arrival_airport"]["id"],
             out_date=flight["flights"][0]["departure_airport"]["time"],
             return_date=return_date
-        ) for flight in data]
+        ) for flight in all_flights]
     sorted_flights = sorted(fldata_list, key=lambda f:f.price)
-    return(sorted_flights[0].price)
+    return(sorted_flights[0])
