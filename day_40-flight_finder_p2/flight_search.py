@@ -18,11 +18,12 @@ class FlightSearch:
             "api_key": self._api_key,
         }
 
-    def check_flights(self, origin_city_code, destination_city_code, from_time, to_time):
+    def check_flights(self, origin_city_code, destination_city_code, from_time, to_time, is_direct=True):
         self.params["outbound_date"] = from_time
         self.params["return_date"] = to_time
         self.params["departure_id"] = origin_city_code
         self.params["arrival_id"] = destination_city_code
+        self.params["stops"] = 1 if is_direct else 0
         res = requests.get(self.endpoint, params=self.params)
         res.raise_for_status()
         self.data = res.json()
