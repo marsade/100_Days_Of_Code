@@ -1,28 +1,32 @@
+#!/usr/bin/env python3
+'''Twilio Notification Manager Class'''
 import os
+from dotenv import load_dotenv
 from twilio.rest import Client
 
-# Using a .env file to retrieve the phone numbers and tokens.
 
+load_dotenv()
 class NotificationManager:
+    def __init__(self, fl_price, dep, arr, out, in_):
+        self.acc_sid = os.getenv("TW_ACC_SID")
+        self.auth = os.getenv("TW_AUTH")
+        self.client = Client(self.acc_sid, self.auth)
+        self.msg_body = f"Low price alert! Only ${fl_price} to fly from {dep} to {arr}, on {out} until {in_}"
 
-    def __init__(self):
-        self.client = Client(os.environ['TWILIO_SID'], os.environ["TWILIO_AUTH_TOKEN"])
+    def send_sms(self):
+        message = self.client.messages \
+            .create(
+                body=self.msg_body,
+                from_=os.getenv("TW_VIRTUAL_NUM"),
+                to=os.getenv("TW_VERIFIED_NUM")
+            )
+        print(message.status)
 
-    def send_sms(self, message_body):
-        message = self.client.messages.create(
-            from_=os.environ["TWILIO_VIRTUAL_NUMBER"],
-            body=message_body,
-            to=os.environ["TWILIO_VERIFIED_NUMBER"]
-        )
-        # Prints if successfully sent.
-        print(message.sid)
-
-    # Is SMS not working for you or prefer whatsapp? Connect to the WhatsApp Sandbox!
-    # https://console.twilio.com/us1/develop/sms/try-it-out/whatsapp-learn
-    def send_whatsapp(self, message_body):
-        message = self.client.messages.create(
-            from_=f'whatsapp:{os.environ["TWILIO_WHATSAPP_NUMBER"]}',
-            body=message_body,
-            to=f'whatsapp:{os.environ["TWILIO_VERIFIED_NUMBER"]}'
-        )
+    def send_whatsapp(self):
+        message = self.client.messages \
+            .create(
+                body=self.msg_body,
+                from_=f"whatsapp:{os.getenv("TW_VIRWP_NUM")}",
+                to=f"whatsapp:{os.getenv("TW_WHATSAPP_NUM")}"
+            )
         print(message.sid)
