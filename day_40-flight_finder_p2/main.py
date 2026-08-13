@@ -9,6 +9,8 @@ from flight_search import FlightSearch
 from notification_manager import NotificationManager
 from pprint import pprint
 
+DEP_IATA_CODE = "ECN"
+
 
 load_dotenv()
 requests_cache.install_cache(
@@ -30,16 +32,21 @@ sheet = sheet_data.get_prices()
 
 search_flight = FlightSearch()
 for sh in sheet:
-    fl_data = search_flight.check_flights("ECN", sh["iataCode"], one_month, stay_till)
+    print(f"Getting direct flights for {sh["iataCode"]}")
+    fl_data = search_flight.check_flights(DEP_IATA_CODE, sh["iataCode"], one_month, stay_till)
     return_date = fl_data["search_parameters"]["return_date"]
-    flights_list = fl_data.get("best_flights", []) + fl_data.get("other_flights", [])
+    cheapest_flight = find_cheapest_flight(fl_data, return_date=return_date)
 
-    cheapest_flight = find_cheapest_flight(flights_list, return_date=return_date)
-    print("Cheapest Flight Found: ", cheapest_flight)
-    if cheapest_flight < sh["lowestPrice"] and cheapest_flight != "N/A":
-        print(sheet_data.update_lowest_price(sh["id"], cheapest_flight))
-        NotificationManager(cheapest_flight, "ECN", sh["iataCode"], one_month, stay_till).send_sms()
-        NotificationManager(cheapest_flight, "ECN", sh["iataCode"], one_month, stay_till).send_whatsapp()
-
+    if cheapest_flight.price == "N/A":
+        print(f"No direct flight found  for {sh["iataCode"]}. Looking for indirect flights...")
+        fl_data = search_flight.check_flights(DEP_IATA_CODE, sh["iataCode"], one_month, stay_till, is_direct=False)
+        return_date = fl_data["search_parameters"]["return_date"]
+        cheapest_flight = find_cheapest_flight(fl_data, return_date=return_date)
+    print(f"Cheapest flight for {sh["iataCode"]} found: {cheapest_flight.price}")
+    if cheapest_flight.price < sh["lowestPrice"]:
+        print("Lower than sheet price. Updating sheet...")
+        print(sheet_data.update_lowest_price(sh["id"], cheapest_flight.price))
+        NotificationManager(cheapest_flight.price, "ECN", sh["iataCode"], one_month, stay_till).send_sms()
+        NotificationManager(cheapest_flight.price, "ECN", sh["iataCode"], one_month, stay_till).send_whatsapp()
     else:
         print("Sheet Price Lower... skipping update")
