@@ -17,7 +17,8 @@ requests_cache.install_cache(
     "flight_cache",
     expire_after=3600,
     urls_expire_after={
-        os.getenv("SHEET_URL"): requests_cache.DO_NOT_CACHE
+        os.getenv("SHEETY_PRICE_URL"): requests_cache.DO_NOT_CACHE,
+        os.getenv("SHEETY_USERS_URL"): requests_cache.DO_NOT_CACHE
     }
 )
 
@@ -27,10 +28,12 @@ stay_till_dt = one_month_dt + dt.timedelta(days=45)
 one_month = one_month_dt.strftime("%Y-%m-%d")
 stay_till = stay_till_dt.strftime("%Y-%m-%d")
 
+search_flight = FlightSearch()
 sheet_data = DataManager()
 sheet = sheet_data.get_prices()
+users = sheet_data.get_customer_email()
 
-search_flight = FlightSearch()
+
 for sh in sheet:
     print(f"Getting direct flights for {sh["iataCode"]}")
     fl_data = search_flight.check_flights(DEP_IATA_CODE, sh["iataCode"], one_month, stay_till)
@@ -42,11 +45,17 @@ for sh in sheet:
         fl_data = search_flight.check_flights(DEP_IATA_CODE, sh["iataCode"], one_month, stay_till, is_direct=False)
         return_date = fl_data["search_parameters"]["return_date"]
         cheapest_flight = find_cheapest_flight(fl_data, return_date=return_date)
+
     print(f"Cheapest flight for {sh["iataCode"]} found: {cheapest_flight.price}")
+
     if cheapest_flight.price < sh["lowestPrice"]:
         print("Lower than sheet price. Updating sheet...")
         print(sheet_data.update_lowest_price(sh["id"], cheapest_flight.price))
-        NotificationManager(cheapest_flight.price, "ECN", sh["iataCode"], one_month, stay_till).send_sms()
-        NotificationManager(cheapest_flight.price, "ECN", sh["iataCode"], one_month, stay_till).send_whatsapp()
+        NotificationManager(cheapest_flight.price, DEP_IATA_CODE, sh["iataCode"], one_month, stay_till, cheapest_flight.stops).send_sms()
+        NotificationManager(cheapest_flight.price, DEP_IATA_CODE, sh["iataCode"], one_month, stay_till, cheapest_flight.stops).send_whatsapp()
+
+        for user in users:
+            print("Sending to Users")
+            NotificationManager(cheapest_flight.price, DEP_IATA_CODE, sh["iataCode"], one_month, stay_till, cheapest_flight.stops).send_emails(user["whatIsYourEmail?"])
     else:
         print("Sheet Price Lower... skipping update")
