@@ -13,9 +13,8 @@ from ytmusicapi import YTMusic
 
 load_dotenv()
 yt = YTMusic("browser.json")
-scope = "playlist-modify-public playlist-modify-private  \
-        playlist-read-private user-library-read private  \
-        user-read-currently-playing"
+scope = "playlist-modify-private playlist-read-private \
+         user-library-read user-read-currently-playing"
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
                      client_id=os.getenv("SPOTIFY_CL_ID"),
                      client_secret=os.getenv("SPOTIFY_SECRET_KEY"),
@@ -113,7 +112,7 @@ def sp_add_pl(songs):
     track_uris = []
     for song in songs:
         try:
-            q = f"track'{song}' year:{int(year) - 1} - {int(year) + 1}"
+            q = f"track:'{song}' year:{int(year) - 1}-{int(year) + 1}"
             track = sp.search(q=q, type="track", limit=1)
             track_uris.append(track["tracks"]["items"][0]["uri"])
         except Exception as e:
